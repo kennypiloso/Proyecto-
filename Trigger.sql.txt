@@ -1,0 +1,33 @@
+--Crear un Trigger que actualice la cantidad de clientes que hay por cada vez que se registre uno nuevo
+--Crea la funcion de conteo--
+create or replace function conteo ()
+returns trigger as $$
+declare
+--declara la variable total de operaciones-- 
+	contar int;
+begin
+--contea el total de operaciones de clientes--
+	contar := (select Count(*) from cliente);
+	if(contar>0) then
+	RAISE NOTICE 'La cantidad de usuarios registrados es de: (%)', contar;
+	return new;
+	end if;
+end
+$$
+language plpgsql;
+--Creamos trigger y le asignamos la funcion de conteo--
+create trigger tr_conteo
+after insert on cliente
+for each row
+execute procedure conteo();
+
+-- prueba para verificar si funciona el trigger
+INSERT INTO cliente (CED_CLIENTE, COD_MEMBRESIA, NOMBRES_CLIENTE, TELF_CLIENTE, FECHA_REGISTRO_CLIENTE, 
+FECHA_MEMBRESIA_CLIENTE) VALUES ('1315901271', 'DIAM', 'Santana Anchundia Carlos', '0991221203', '2020-06-09', '2021-11-01')
+
+INSERT INTO cliente (CED_CLIENTE, COD_MEMBRESIA, NOMBRES_CLIENTE, TELF_CLIENTE, FECHA_REGISTRO_CLIENTE, 
+FECHA_MEMBRESIA_CLIENTE) VALUES 
+('1315901279', 'BRON', 'Delgado Anchundia Rosa', '0991221459', '2021-09-09', '2021-11-11')
+
+--DELETE FROM cliente WHERE CED_CLIENTE ='1315901272'
+--select * from cliente

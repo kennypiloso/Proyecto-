@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dd44eabe-466c-4858-8b0d-d6cf764ba533">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT membresia.TIPO_MEMBRESIA AS MEMBRESIAS, COUNT(cliente.COD_MEMBRESIA) AS CANTIDAD_DE_CLIENTES_INSCRITOS FROM cliente INNER JOIN membresia ON cliente.COD_MEMBRESIA = membresia.COD_MEMBRESIA GROUP BY cliente.COD_MEMBRESIA, membresia.TIPO_MEMBRESIA ORDER BY (cliente.COD_MEMBRESIA) ASC;]]>
+	</queryString>
+	<field name="membresias" class="java.lang.String"/>
+	<field name="cantidad_de_clientes_inscritos" class="java.lang.Long"/>
+	<group name="membresias">
+		<groupExpression><![CDATA[$F{membresias}]]></groupExpression>
+	</group>
+	<group name="cantidad_de_clientes_inscritos">
+		<groupExpression><![CDATA[$F{cantidad_de_clientes_inscritos}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="68" y="36" width="526" height="43" forecolor="#000000" uuid="b9184f20-4d01-4829-a34e-2292ce845462"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font size="24" isBold="false" isItalic="false" isUnderline="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Cantidad de clientes con la membresía más alta]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="19" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement x="130" y="2" width="100" height="20" forecolor="#FF0033" uuid="6e70c788-7337-4387-9a17-ef77c7f62f21"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[membresias]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="2" width="140" height="20" forecolor="#FF0000" uuid="edcde63b-7276-434c-854e-8d53cc29386f"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[cantidad_de_clientes_inscritos]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement x="130" y="16" width="100" height="20" uuid="84c3f7f9-fef5-47a2-a5a3-4ae4cfd68183"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{membresias}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="470" y="16" width="100" height="20" uuid="8263cb47-39f0-468e-9d13-d05007850323"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidad_de_clientes_inscritos}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="13" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="202" splitType="Stretch">
+			<pieChart>
+				<chart>
+					<reportElement x="151" y="0" width="363" height="202" uuid="4b065580-58f5-4bab-9e65-7851b131df1e"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{membresias}]]></keyExpression>
+					<valueExpression><![CDATA[$F{cantidad_de_clientes_inscritos}]]></valueExpression>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<staticText>
+				<reportElement x="397" y="86" width="100" height="29" uuid="d1f81f4d-b26e-4b27-b4d0-b7a68255d03e"/>
+				<text><![CDATA[3 clientes con la menbresia mas alta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="14" width="100" height="29" uuid="22d02aeb-51c7-44b6-96f9-347f05da1037"/>
+				<text><![CDATA[3 clientes con la menbresia mas baja]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
